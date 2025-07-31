@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  ark-server:
+    # Build the image from the Dockerfile in the current directory
+    build: .
+    container_name: ark-preaquatic-server
+    restart: unless-stopped
+    
+    # Map the ports from the container to your host machine
+    ports:
+      - "7777:7777/udp"    # Game Port
+      - "7778:7778/udp"    # Query Port
+      - "27015:27015/tcp"  # RCON Port
+      
+    # Use a named volume to persist your server data (worlds, configs, mods)
+    volumes:
+      - ark-data:/ark
+      
+    # --- SERVER CONFIGURATION ---
+    # Edit these variables to customize your server
+    environment:
+      # Server Basics
+      - SESSION_NAME=My ARK Pre-Aquatic Server 🦖
+      - SERVER_MAP=TheIsland
+      - MAX_PLAYERS=10
+      
+      # Passwords (leave empty for no password)
+      - SERVER_PASSWORD=my_server_password
+      - ADMIN_PASSWORD=my_admin_password
+      
+      # Mods (comma-separated list of Workshop IDs)
+      # Example: Structures Plus (S+) and Awesome SpyGlass!
+      - GAME_MOD_IDS=731604991,849372965
+
+      # Other Settings
+      - DISABLE_BATTLEYE=true # Set to 'false' to enable BattlEye
+
+volumes:
+  # Defines the named volume for data persistence
+  ark-data:
