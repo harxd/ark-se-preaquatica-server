@@ -30,9 +30,9 @@ RUN chmod +x ./start_server.sh
 
 # Expose ARK server ports
 # 7777/udp: Game Port
-# 7778/udp: Query Port
-# 27015/tcp: RCON Port
-EXPOSE 7777/udp 7778/udp 27015/tcp
+# 7778/udp: Game Port
+# 27015/udp: Server Query Port
+EXPOSE 7777/udp 7778/udp 27015/udp
 
 # Set the entrypoint script
 ENTRYPOINT [ "./start_server.sh" ]

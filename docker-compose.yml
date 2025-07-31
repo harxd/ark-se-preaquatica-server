@@ -10,8 +10,8 @@ services:
     # Map the ports from the container to your host machine
     ports:
       - "7777:7777/udp"    # Game Port
-      - "7778:7778/udp"    # Query Port
-      - "27015:27015/tcp"  # RCON Port
+      - "7778:7778/udp"    # Game Port
+      - "27015:27015/udp"  # Steam Query Port
       
     # Use a named volume to persist your server data (worlds, configs, mods)
     volumes:
