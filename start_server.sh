@@ -3,7 +3,7 @@ set -e
 
 # --- Environment Variables with Defaults ---
 # If a variable is not set, its default value will be used.
-export SESSION_NAME="${SESSION_NAME:-ARK Pre-Aquatic Docker}"
+export SESSION_NAME="${SESSION_NAME:-ARK Pre-Aquatic Server}"
 export SERVER_MAP="${SERVER_MAP:-TheIsland}"
 export SERVER_PASSWORD="${SERVER_PASSWORD:-}"
 export ADMIN_PASSWORD="${ADMIN_PASSWORD:-$(openssl rand -base64 12)}"
@@ -17,8 +17,8 @@ ARK_DIR="/ark"
 
 # --- Server and Mod Installation/Update ---
 echo ">>> Checking for ARK server updates..."
-# The '-beta preaquatic' flag targets the specific branch
-$STEAMCMD_DIR/steamcmd.sh +force_install_dir $ARK_DIR +login anonymous +app_update 376030 -beta preaquatic validate +quit
+# The '-beta preaquatica' flag targets the specific branch
+$STEAMCMD_DIR/steamcmd.sh +force_install_dir $ARK_DIR +login anonymous +app_update 376030 -beta preaquatica validate +quit
 
 # Check and install/update mods if GAME_MOD_IDS is set
 if [ -n "$GAME_MOD_IDS" ]; then
@@ -33,7 +33,7 @@ fi
 
 # --- Construct Server Launch Arguments ---
 # Base command with map and essential flags
-SERVER_ARGS="${SERVER_MAP}?SessionName=${SESSION_NAME}?MaxPlayers=${MAX_PLAYERS}?QueryPort=7778?RCONEnabled=True?RCONPort=27015"
+SERVER_ARGS="${SERVER_MAP}?SessionName=${SESSION_NAME}?MaxPlayers=${MAX_PLAYERS}?Port=7777??QueryPort=27015"
 
 # Add server password if it is set
 if [ -n "$SERVER_PASSWORD" ]; then

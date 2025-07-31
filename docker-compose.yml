@@ -30,8 +30,8 @@ services:
       - ADMIN_PASSWORD=my_admin_password
       
       # Mods (comma-separated list of Workshop IDs)
-      # Example: Structures Plus (S+) and Awesome SpyGlass!
-      - GAME_MOD_IDS=731604991,849372965
+      # Example: Structures Plus (S+)
+      - GAME_MOD_IDS=731604991
 
       # Other Settings
       - DISABLE_BATTLEYE=true # Set to 'false' to enable BattlEye
