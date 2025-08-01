@@ -12,7 +12,7 @@ RUN apt update && \
         # For downloading steamcmd
         curl \                  
         # 32-bit libraries required by steamcmd
-        lib32gcc \           
+        lib32gcc-s1 \           
         # For SSL/TLS support
         ca-certificates \
         # For locale support
@@ -31,15 +31,18 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 USER steam
 WORKDIR /home/steam
 
+# Ensure /ark exists and is owned by steam user (redundant but safe for bind mounts)
+RUN mkdir -p /ark && chown steam:steam /ark
+
 # Download and install SteamCMD
 RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zx -C /home/steam/steamcmd
 
 # Set working directory for the server files
 WORKDIR /ark
 
-# Copy the server start script and give it execution permissions
-COPY --chown=steam:steam start_server.sh .
-RUN chmod +x ./start_server.sh
+# Copy the server start script to /ark and give it execution permissions
+COPY --chown=steam:steam start_server.sh /ark/start_server.sh
+RUN chmod +x /ark/start_server.sh
 
 # Expose ARK server ports
 # 7777/udp: Game Port
@@ -48,4 +51,4 @@ RUN chmod +x ./start_server.sh
 EXPOSE 7777/udp 7778/udp 27015/udp
 
 # Set the entrypoint script
-ENTRYPOINT [ "./start_server.sh" ]
+ENTRYPOINT [ "/ark/start_server.sh" ]
